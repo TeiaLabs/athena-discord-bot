@@ -1,13 +1,18 @@
-import discord
-import requests
 import dotenv
 import os
+import requests
+
+import discord
+
 
 dotenv.load_dotenv()
 client = discord.Client(intents=discord.Intents.default())
 API_ENDPOINT = "https://athena.teialabs.com.br:2521/ask/"
 ATHENA_API_ACESSS_TOKEN =  os.getenv("ATHENA_API_ACESSS_TOKEN")
 ATHENA_DISCORD_BOT_TOKEN = os.getenv("ATHENA_DISCORD_BOT_TOKEN")
+if ATHENA_API_ACESSS_TOKEN is None or ATHENA_DISCORD_BOT_TOKEN is None:
+    raise ValueError("Faild to load env variables")
+
 
 @client.event
 async def on_ready():
@@ -37,6 +42,7 @@ async def on_message(message):
 
     r = requests.post(url=API_ENDPOINT, headers=headers, json=data)
     response = r.json()
+    #answer = AthenaClient().chat(msg)
     await message.channel.send(response["response_text"])
 
 client.run(ATHENA_DISCORD_BOT_TOKEN)
