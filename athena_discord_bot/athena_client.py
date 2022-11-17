@@ -1,6 +1,7 @@
 import dotenv
 import os
 import requests
+import re
 
 dotenv.load_dotenv()
 
@@ -20,6 +21,9 @@ class AthenaClient:
 
     @classmethod
     def chat(cls, message):
+        if message.content.startswith("<@"):
+            message.content = re.sub(r'<@.*?>', '', message.content)
+            print(message.content)
         data = {
             "channel_id": message.channel.id,
             "team_id": message.author.guild.id if hasattr(message.author, "guild") else "",
