@@ -6,6 +6,7 @@ dotenv.load_dotenv()
 
 
 class AthenaClient:
+    poet = "https://athena-poet.teialabs.com.br/?idMessage="
     endpoint = "https://athena.teialabs.com.br:2521/ask/"
     access_token =  os.getenv("ATHENA_API_ACESSS_TOKEN")
     if access_token is None:
@@ -32,3 +33,8 @@ class AthenaClient:
         response.raise_for_status()
         response_body = response.json()
         return response_body
+
+    @classmethod
+    def poet_url(cls, user_message_id):
+        link = cls.poet + user_message_id
+        return link
