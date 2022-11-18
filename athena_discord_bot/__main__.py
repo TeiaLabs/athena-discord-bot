@@ -10,7 +10,6 @@ dotenv.load_dotenv()
 intents = discord.Intents.default()
 intents.members = True
 client = discord.Client(intents = intents)
-last_message = {"user_message_id": ''}
 ATHENA_DISCORD_BOT_TOKEN = os.getenv("ATHENA_DISCORD_BOT_TOKEN")
 if ATHENA_DISCORD_BOT_TOKEN is None:
     raise ValueError("Failed to load env variables.")
@@ -27,9 +26,8 @@ async def on_message(message):
     if message.author == client.user or message.content == "":
         return
     body = AthenaClient().chat(message)
-    last_message["user_message_id"] = body["message_id"]
     print(body)
-    await message.channel.send(body["response_text"])
+    await message.reply(body["response_text"])
 
 @client.event
 async def on_reaction_add(reaction, user):
@@ -39,7 +37,7 @@ async def on_reaction_add(reaction, user):
     print("Client:", user)
     AthenaClient().chat(reaction.message)
     if reaction.emoji == '📸'or reaction.emoji == '📷':
-        body = AthenaClient().poet_url(last_message["user_message_id"])
+        body = AthenaClient().poet_url(reaction.message.reference.message_id)
         await reaction.message.channel.send(body)
 
 client.run(ATHENA_DISCORD_BOT_TOKEN)

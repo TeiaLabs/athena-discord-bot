@@ -9,6 +9,7 @@ dotenv.load_dotenv()
 class AthenaClient:
     poet = "https://athena-poet.teialabs.com.br/?idMessage="
     endpoint = "https://athena.teialabs.com.br:2521/ask/"
+    question = "https://athena.teialabs.com.br:2521/questions/"
     access_token =  os.getenv("ATHENA_API_ACESSS_TOKEN")
     if access_token is None:
         raise ValueError("Faild to load env variables")
@@ -39,5 +40,5 @@ class AthenaClient:
 
     @classmethod
     def poet_url(cls, user_message_id):
-        link = cls.poet + user_message_id
+        link = cls.poet + str(user_message_id)
         return link
