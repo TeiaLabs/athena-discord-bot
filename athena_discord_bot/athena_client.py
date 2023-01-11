@@ -21,11 +21,11 @@ class AthenaClient:
     }
 
     @classmethod
-    def chat(cls, message):
-        if message.content.startswith("<@"):
-            message.content = re.sub(r'<@.*?>', '', message.content)
+    def chat(cls, client_id, message, thread_id):
+        message.content = re.sub(rf'<@{client_id}>', 'Athena', message.content)
         data = {
             "channel_id": message.channel.id,
+            "thread_id": thread_id,
             "team_id": message.author.guild.id if hasattr(message.author, "guild") else "",
             "message_id": message.id,
             "message_text": message.content,
