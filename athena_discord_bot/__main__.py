@@ -52,10 +52,10 @@ async def on_reaction_add(reaction, user):
     AthenaClient().chat(client.user.id, reaction.message, thread_id)
     if reaction.emoji == "📸" or reaction.emoji == "📷":
         try:
-            body = AthenaClient().poet_url(client.user.id, reaction.message.reference.message_id)
+            body = AthenaClient().poet_url(reaction.message.reference.message_id)
             await reaction.message.channel.send(body)
         except:
-            body = AthenaClient().poet_url(client.user.id, reaction.message.channel.id)
+            body = AthenaClient().poet_url((reaction.message.channel.id))
             await reaction.message.channel.send(body)
 
 client.run(ATHENA_DISCORD_BOT_TOKEN)
