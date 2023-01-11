@@ -55,7 +55,7 @@ async def on_reaction_add(reaction, user):
             body = AthenaClient().poet_url(client.user.id, reaction.message.reference.message_id)
             await reaction.message.channel.send(body)
         except:
-            body = AthenaClient().poet_url(client.user.id, reaction.messase.channel.id)
+            body = AthenaClient().poet_url(client.user.id, reaction.message.channel.id)
             await reaction.message.channel.send(body)
 
 client.run(ATHENA_DISCORD_BOT_TOKEN)
