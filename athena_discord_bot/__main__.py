@@ -1,6 +1,7 @@
 import dotenv
 import os
 
+from random_thread_name import generate_passphrase
 from discord import Message, DMChannel, Thread
 import discord
 
@@ -34,7 +35,7 @@ async def on_message(message: Message):
         await message.reply(body["response_text"])
     else:
         thread = await message.create_thread(
-            name=f"{message.author.name}"
+            name =generate_passphrase()
         )
         thread_id = message.id
         body = AthenaClient().chat(client.user.id, message, thread_id)
